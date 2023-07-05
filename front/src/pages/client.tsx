@@ -7,7 +7,7 @@ import ModalEditUser from "@/components/Modals/ModalEditUser";
 import ModalUserContacts from "@/components/Modals/ModalUserContacts";
 import ModalUserEmails from "@/components/Modals/ModalUserEmails";
 import { GetServerSideProps, GetServerSidePropsResult, NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import nookies from 'nookies'
 import { redirect } from 'next/dist/server/api-utils'
 import { iCreateContactReturn } from "@/schemas/createContact.schema";
@@ -22,7 +22,7 @@ interface iClientProps {
     client: iclientReturn,
     clientContacts: iClientAddContactReturn[],
     clientEmails: iClientAddEmailReturn[],
-    // contactContacts: (id: string) => Promise<iContactAddPhoneReturn[] | undefined | void>,
+    contactContacts: (id: string) => Promise<iContactAddPhoneReturn[] | undefined | void>,
 }
 
 const Client: NextPage<iClientProps> = ({contacts, client, clientContacts, clientEmails}) => {
@@ -74,7 +74,7 @@ const Client: NextPage<iClientProps> = ({contacts, client, clientContacts, clien
 
 export const getServerSideProps: GetServerSideProps = async (ctx): Promise<GetServerSidePropsResult<{ [key: string]: any; }>> => {
     const cookies = nookies.get(ctx)
-
+    
     if (!cookies["contactguard.token"]) {
         return {
             redirect: {
@@ -120,5 +120,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx): Promise<GetSe
   
 export default Client
 
-// Falta renderizar dinamicamente para quando pegar, atualizar, excluir os dados eles renderizarem na page
-// Falta colocar o Bearer na doc da API, podendo digita-lo no site da API
+//Falta renderizar dinamicamente para quando pegar, atualizar, excluir os dados eles renderizarem na page
+//Falta colocar o btn de saída funcionando
+//Falta colocar o Bearer na doc da API, podendo digita-lo no site da API

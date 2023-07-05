@@ -5,7 +5,7 @@ import { clientLogin } from "@/schemas/login.schema";
 import { clientRegister } from "@/schemas/register.schema";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { toast } from 'react-toastify'
 import nookies, { parseCookies, setCookie } from 'nookies'
 
@@ -106,39 +106,43 @@ const ClientProvider = ({children}: iClientProviderProps) => {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((err) => console.log(err))
+        }).then(() => router.replace(router.asPath)).catch((err) => console.log(err))
     }
     const createClientContact = async (contact: iClientAddContact) => {
         await api.post('client-telephone', contact, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((err) => console.log(err, token))
+        }).then(() => router.replace(router.asPath)).catch((err) => console.log(err, token))
     }
     const excludeClientEmail = async (idEmail: string) => {
         await api.delete(`client-email/${idEmail}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((err) => console.log(err))
+        }).then(() => router.replace(router.asPath)).catch((err) => console.log(err))
     }
     const excludeClientContact = async (idContact: string) => {
         await api.delete(`client-telephone/${idContact}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((err) => console.log(err))
+        }).then(() => router.replace(router.asPath)).catch((err) => console.log(err))
     }
     const updateInfoClient = async (data: iEditUser) => {
         await api.patch(`/clients/${idClient}`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).catch((err) => console.log(err))
+        }).then(() => router.replace(router.asPath)).catch((err) => console.log(err))
     }
     const setToken = (value: string) => {
         console.log(value)
     }
+
+    useEffect(() => {
+        
+    }, [])
 
     return (
         <ClientContext.Provider

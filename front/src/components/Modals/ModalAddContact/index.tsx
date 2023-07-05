@@ -30,7 +30,7 @@ const ModalAddContact= ({openModal}: iModalAddContact) => {
     const submitAddContact: SubmitHandler<iContactAddPhone> = (contactData: iContactAddPhone) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         addMoreContact(contactData)
-        openModal(false)
+        // openModal(false)
     };
 
     return (

@@ -24,7 +24,7 @@ const MenuContatos = ({openCreateContact, openAddContact, openAddEmail, contacts
                             <CardContact key={index} contactId={item.id} name={item.name} openAddContact={openAddContact} openAddEmail={openAddEmail}/>
                         )
                     })
-                }   
+                }  
             </ul>
         </section>
     )

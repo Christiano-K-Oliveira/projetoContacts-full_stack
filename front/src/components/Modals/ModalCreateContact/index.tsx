@@ -1,6 +1,7 @@
 import { ContactContext } from "@/contexts/contactContext"
 import { createContactSchema, iCreateContact } from "@/schemas/createContact.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/router"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { AiOutlineClose } from 'react-icons/ai'
@@ -10,6 +11,7 @@ interface iModalCreateContact {
 }
 
 const ModalCreateContact = ({openModal}: iModalCreateContact) => {
+    const router = useRouter()
 
     function closeModal(element: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const target = element.target as HTMLDivElement
@@ -29,6 +31,7 @@ const ModalCreateContact = ({openModal}: iModalCreateContact) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         createContact(userData)
         openModal(false)
+        router.replace(router.asPath)
     };
 
 

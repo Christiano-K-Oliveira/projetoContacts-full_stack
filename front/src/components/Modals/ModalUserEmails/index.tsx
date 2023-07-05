@@ -32,7 +32,7 @@ const ModalUserEmails = ({openModal, emails}: iModalUserEmails) => {
     const submitAddUserEmail: SubmitHandler<iClientAddEmail> = (emailData: iClientAddEmail) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         createClientEmail(emailData)
-        openModal(false)
+        // openModal(false)
     };
 
     return (

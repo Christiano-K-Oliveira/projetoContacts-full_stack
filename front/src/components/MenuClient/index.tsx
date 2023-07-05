@@ -3,6 +3,8 @@ import { MdEmail, MdOutlineAlternateEmail } from 'react-icons/md'
 import { AiFillContacts } from 'react-icons/ai'
 import { Dispatch, SetStateAction } from 'react';
 import { iclientReturn } from '@/schemas/register.schema';
+import { useRouter } from 'next/router';
+import { destroyCookie } from 'nookies';
 
 interface iMenuBar {
     openEditUser: Dispatch<SetStateAction<boolean>>;
@@ -11,9 +13,9 @@ interface iMenuBar {
     client: iclientReturn;
 }
 
-const MenuClient = ({openEditUser, openContacts, openEmails, client}: iMenuBar) => {
-    const exit = () => {
-    }
+const MenuClient = ({openEditUser, openContacts, openEmails, client }: iMenuBar) => {
+    const router = useRouter()
+
     const initialName = () => {
         let name = `${client.name[0]}`
 
@@ -24,6 +26,11 @@ const MenuClient = ({openEditUser, openContacts, openEmails, client}: iMenuBar) 
         }
 
         return name
+    }
+    const exit = () => {
+        destroyCookie(null, "contactguard.token")
+        destroyCookie(null, "contactguard.id")
+        router.push("/")
     }
 
     return (

@@ -2,8 +2,9 @@ import { iContactAddEmail, iContactAddEmailReturn } from "@/schemas/contactAddEm
 import { iContactAddPhone, iContactAddPhoneReturn } from "@/schemas/contactAddPhone.schema";
 import { iCreateContact } from "@/schemas/createContact.schema";
 import { api } from "@/services/api";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { boolean, string } from "zod";
 
 interface iContactProviderProps {
@@ -32,6 +33,7 @@ const ContactProvider = ({children}: iContactProviderProps) => {
     const [moreContacts, setMoreContacts]= useState(Array<iContactAddPhoneReturn>)
     const [contactId, setContactId] = useState(String)
     const [moreEmails, setMoreEmails]= useState(Array<iContactAddEmailReturn>)
+    const router = useRouter()
 
     const createContact = async (contactData: iCreateContact) => {
       await api.post('contacts', contactData, {
@@ -56,6 +58,9 @@ const ContactProvider = ({children}: iContactProviderProps) => {
           Authorization:`Bearer ${token}`
         }
       })
+
+      getMoreContactsInMyContact(contactId)
+      router.replace(router.asPath)
     }
     const addMoreEmail = async (emailData: iContactAddEmail) => {
       emailData["contact_id"] = contactId
@@ -65,32 +70,49 @@ const ContactProvider = ({children}: iContactProviderProps) => {
           Authorization:`Bearer ${token}`
         }
       })
+
+      getMoreEmailsInMyContact(contactId)
+      router.replace(router.asPath)
     }
-    const excludeMoreEmail = async (emailId: string) => {
-      await api.delete(`contact-email/${emailId}`, {
+    const excludeMoreEmail = async (emailID: string) => {
+      await api.delete(`contact-email/${emailID}`, {
         headers: {
           Authorization:`Bearer ${token}`
         }
       })
+
+      getMoreEmailsInMyContact(contactId)
+      if (moreEmails.length === 1) {
+        setMoreEmails([])
+      }
+      router.replace(router.asPath)
     }
-    const excludeMoreContact = async (contactId: string) => {
-      await api.delete(`contact-telephone/${contactId}`, {
+    const excludeMoreContact = async (contactID: string) => {
+      await api.delete(`contact-telephone/${contactID}`, {
         headers: {
           Authorization:`Bearer ${token}`
         }
       })
+
+      getMoreContactsInMyContact(contactId)
+      if (moreContacts.length === 1) {
+        setMoreContacts([])
+      }
+      router.replace(router.asPath)
     }
 
-    const getMoreContactsInMyContact = async (contactId: string): Promise<iContactAddPhoneReturn[] | void> => {
-        await api.get<iContactAddPhoneReturn[]>(`contact-telephone/${contactId}`, {
+    const getMoreContactsInMyContact = async (contactID: string): Promise<iContactAddPhoneReturn[] | void> => {
+        await api.get<iContactAddPhoneReturn[]>(`contact-telephone/${contactID}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         }).then((res) => {
           setMoreContacts(res.data)
-        }).catch(err => console.log(err))
-        
-        setContactId(contactId)
+        }).catch(() => {
+          setMoreContacts([])
+        })
+
+        setContactId(contactID)
     }
     const getMoreEmailsInMyContact = async (contactId: string): Promise<iContactAddEmailReturn[] | void> => {
       await api.get<iContactAddEmailReturn[]>(`contact-email/${contactId}`, {
@@ -99,11 +121,13 @@ const ContactProvider = ({children}: iContactProviderProps) => {
         }
       }).then((res) => {
         setMoreEmails(res.data)
-      }).catch(err => console.log(err))
+      }).catch(() => {
+        setMoreEmails([])
+      })
       
       setContactId(contactId)
-    }  
-
+    }
+    
     return (
         <ContactContext.Provider
           value={{

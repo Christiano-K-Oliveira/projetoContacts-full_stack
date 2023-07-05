@@ -29,7 +29,7 @@ const ModalUserContacts = ({openModal, contacts}: iModalUserContacts) => {
     const submitAddUserEmail: SubmitHandler<iClientAddContact> = (contactData: iClientAddContact) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         createClientContact(contactData)
-        openModal(false)
+        // openModal(false)
     };
 
     return (

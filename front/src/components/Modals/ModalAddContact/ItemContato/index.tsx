@@ -32,7 +32,9 @@ const ItemContato = ({contato, contatoId}: iItemContato) => {
             <span className='flex ml-8'>{contact}</span>
 
             <button className='hover:text-red-600'>
-                <AiOutlineClose size={30} className='ml-40' onClick={() => excludeMoreContact(contatoId)}/>
+                <AiOutlineClose size={30} className='ml-40' onClick={() => {
+                    excludeMoreContact(contatoId)
+                }}/>
             </button>
         </li>
     )
