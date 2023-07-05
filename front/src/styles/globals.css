@@ -52,6 +52,6 @@ ul, ol {
 
 @layer components {
   .bodr {
-    @apply mt-1 bg-white-fixed
+    @apply mt-1 bg-white-fixed;
   }
 }

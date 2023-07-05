@@ -78,7 +78,7 @@ const ClientProvider = ({children}: iClientProviderProps) => {
 
             toast.success('Login feito com sucesso!', {
                 position: "bottom-right",
-                autoClose: 1000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -123,7 +123,7 @@ const ClientProvider = ({children}: iClientProviderProps) => {
         }).catch((err) => console.log(err))
     }
     const excludeClientContact = async (idContact: string) => {
-        await api.delete(`client-contact/${idContact}`, {
+        await api.delete(`client-telephone/${idContact}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

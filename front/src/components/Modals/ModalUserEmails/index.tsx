@@ -11,10 +11,10 @@ import { ClientContext } from "@/contexts/clientContext"
 
 interface iModalUserEmails {
     openModal: Dispatch<SetStateAction<boolean>>,
-    emails?: iClientAddEmailReturn[],
+    emails: iClientAddEmailReturn[],
 }
 
-const ModalUserEmails: NextPage<iModalUserEmails> = ({openModal, emails}: iModalUserEmails) => {
+const ModalUserEmails = ({openModal, emails}: iModalUserEmails) => {
     function closeModal(element: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const target = element.target as HTMLDivElement
 
@@ -45,17 +45,12 @@ const ModalUserEmails: NextPage<iModalUserEmails> = ({openModal, emails}: iModal
 
                 <ul className="flex flex-col mt-6">
                     {
-                       emails !== undefined ? emails.map((item) => {
+                       emails !== undefined ? emails.map((item, index) => {
                             return (
-                                <ItemEmail email={item.email} emailId={item.id}/>
+                                <ItemEmail key={index} email={item.email} emailId={item.id}/>
                             )
                         }) : null
                     }
-                    {/* <ItemEmail email="jadsjas@mail.com" emailId="5"/>
-                    <ItemEmail email="jadsjas@mail.com" emailId="5"/>
-                    <ItemEmail email="jadsjas@mail.com" emailId="5"/>
-                    <ItemEmail email="jadsjas@mail.com" emailId="5"/>
-                    <ItemEmail email="jadsjas@mail.com" emailId="5"/> */}
                 </ul>
 
                 <form onSubmit={handleSubmit(submitAddUserEmail)} className="flex flex-col">
@@ -70,20 +65,6 @@ const ModalUserEmails: NextPage<iModalUserEmails> = ({openModal, emails}: iModal
             </div>
         </div>
     )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const clientId = nookies.get(ctx)
-
-    const response = await api.get<iClientAddEmailReturn[]>(`client-email/${clientId["contactguard.id"]}`, {
-        headers: {
-            Authorization: `Bearer ${clientId["contactguard.token"]}`
-        }
-    })
-
-    return { 
-      props: {emails: response.data}
-    }
 }
 
 export default ModalUserEmails

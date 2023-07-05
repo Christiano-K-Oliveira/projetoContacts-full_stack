@@ -24,7 +24,7 @@ const ModalAddEmail = ({openModal}: iModalAddEmail) => {
         resolver: zodResolver(clientAddEmailSchema),
     });
 
-    const { addMoreEmail } = useContext(ContactContext)
+    const { addMoreEmail, moreEmails } = useContext(ContactContext)
 
     const submitAddUserEmail: SubmitHandler<iClientAddEmail> = (emailData: iClientAddEmail) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,13 +41,13 @@ const ModalAddEmail = ({openModal}: iModalAddEmail) => {
                 </div>
 
                 <ul className="flex flex-col mt-6">
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
-                    <ItemEmail email="jaskas@mail.com" emailId="5"/>
+                    {
+                        moreEmails !== undefined ? moreEmails.map((item, index) => {
+                            return (
+                                <ItemEmail key={index} email={item.email} emailId={item.id}/>
+                            )
+                        }) : null
+                    }
                 </ul>
 
                 <form onSubmit={handleSubmit(submitAddUserEmail)} className="flex flex-col">

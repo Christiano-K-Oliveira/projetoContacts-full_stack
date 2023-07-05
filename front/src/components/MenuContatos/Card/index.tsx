@@ -12,7 +12,7 @@ interface iCardContact {
 }
 
 const CardContact = ({name, openAddContact, openAddEmail, contactId}: iCardContact) => {
-    const { excludeContact } = useContext(ContactContext)
+    const { excludeContact, getMoreContactsInMyContact, getMoreEmailsInMyContact } = useContext(ContactContext)
 
     return (
         <li className='flex justify-between items-center py-3 bg-white-fixed w-full px-6'>
@@ -22,12 +22,20 @@ const CardContact = ({name, openAddContact, openAddEmail, contactId}: iCardConta
             </div>
 
             <div className='flex items-center gap-4'>
-                <div onClick={() => openAddContact(true)} className='flex gap-2 text-blue-500 hover:text-white-fixed hover:bg-blue-500 p-1 px-3'>
+                <div onClick={() => {
+                    getMoreContactsInMyContact(contactId)
+                    openAddContact(true)
+                    }
+                } className='flex gap-2 text-blue-500 hover:text-white-fixed hover:bg-blue-500 p-1 px-3'>
                     <MdPermContactCalendar size={25} style={{cursor: 'pointer'}}/>
                     <button>Contato</button>
                 </div>
 
-                <div onClick={() => openAddEmail(true)} className='flex gap-2 text-blue-500 hover:text-white-fixed hover:bg-blue-500 p-1 px-3'>
+                <div onClick={() => {
+                    getMoreEmailsInMyContact(contactId)
+                    openAddEmail(true)
+                    }
+                } className='flex gap-2 text-blue-500 hover:text-white-fixed hover:bg-blue-500 p-1 px-3'>
                     <AiOutlineMail size={25} style={{cursor: 'pointer'}}/>
                     <button>Email</button>
                 </div>

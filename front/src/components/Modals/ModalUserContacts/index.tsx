@@ -4,9 +4,6 @@ import { Dispatch, SetStateAction, useContext } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { AiOutlineClose } from 'react-icons/ai'
 import ItemContato from "./ItemContato"
-import { GetServerSideProps, NextPage } from "next"
-import nookies from 'nookies'
-import { api } from "@/services/api"
 import { ClientContext } from "@/contexts/clientContext"
 
 interface iModalUserContacts {
@@ -14,7 +11,7 @@ interface iModalUserContacts {
     contacts?: iClientAddContactReturn[],
 }
 
-const ModalUserContacts: NextPage<iModalUserContacts>  = ({openModal, contacts}: iModalUserContacts) => {
+const ModalUserContacts = ({openModal, contacts}: iModalUserContacts) => {
     function closeModal(element: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const target = element.target as HTMLDivElement
 
@@ -45,9 +42,9 @@ const ModalUserContacts: NextPage<iModalUserContacts>  = ({openModal, contacts}:
 
                 <ul className="flex flex-col mt-6">
                     {
-                       contacts !== undefined ? contacts.map((item) => {
+                       contacts !== undefined ? contacts.map((item, index) => {
                             return (
-                                <ItemContato contato={item.number} contatoId={item.id}/>
+                                <ItemContato key={index} contato={item.number} contatoId={item.id}/>
                             )
                         }) : null
                     }
@@ -65,20 +62,6 @@ const ModalUserContacts: NextPage<iModalUserContacts>  = ({openModal, contacts}:
             </div>
         </div>
     )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const clientId = nookies.get(ctx)
-
-    const response = await api.get<iClientAddContactReturn[]>(`client-contact/${clientId["contactguard.id"]}`, {
-        headers: {
-            Authorization: `Bearer ${clientId["contactguard.token"]}`
-        }
-    })
-
-    return { 
-      props: {contacts: response.data}
-    }
 }
 
 

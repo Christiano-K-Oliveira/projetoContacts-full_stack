@@ -3,12 +3,12 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { useContext } from 'react';
 import { ContactContext } from '@/contexts/contactContext';
 
-interface iItemEMail {
+interface iItemEmail {
     email: string;
     emailId: string;
 }
 
-const ItemEmail = ({email, emailId}: iItemEMail) => {
+const ItemEmail = ({email, emailId}: iItemEmail) => {
     const { excludeMoreEmail } = useContext(ContactContext)
 
     return (

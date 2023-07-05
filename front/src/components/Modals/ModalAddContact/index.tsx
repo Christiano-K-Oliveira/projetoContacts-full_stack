@@ -1,20 +1,17 @@
-import { clientAddContactSchema, iClientAddContact, iClientAddContactReturn } from "@/schemas/clientAddContact.schema"
+import { iClientAddContactReturn } from "@/schemas/clientAddContact.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { AiOutlineClose } from 'react-icons/ai'
 import ItemContato from "./ItemContato"
-import { GetServerSideProps, NextPage } from "next"
-import { api } from "@/services/api"
-import nookies from 'nookies'
 import { ContactContext } from "@/contexts/contactContext"
+import { contactAddPhoneSchema, iContactAddPhone, iContactAddPhoneReturn } from "@/schemas/contactAddPhone.schema"
 
 interface iModalAddContact {
     openModal: Dispatch<SetStateAction<boolean>>,
-    contact?: iClientAddContactReturn[],
 }
 
-const ModalAddContact: NextPage<iModalAddContact> = ({openModal, contact}: iModalAddContact) => {
+const ModalAddContact= ({openModal}: iModalAddContact) => {
 
     function closeModal(element: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const target = element.target as HTMLDivElement
@@ -24,18 +21,17 @@ const ModalAddContact: NextPage<iModalAddContact> = ({openModal, contact}: iModa
         }  
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm<iClientAddContact>({
-        resolver: zodResolver(clientAddContactSchema),
+    const { register, handleSubmit, formState: { errors } } = useForm<iContactAddPhone>({
+        resolver: zodResolver(contactAddPhoneSchema),
     });
 
-    const { addMoreContact } = useContext(ContactContext)
+    const { addMoreContact, moreContacts } = useContext(ContactContext)
 
-    const submitAddContact: SubmitHandler<iClientAddContact> = (contactData: iClientAddContact) => {
+    const submitAddContact: SubmitHandler<iContactAddPhone> = (contactData: iContactAddPhone) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         addMoreContact(contactData)
         openModal(false)
     };
-
 
     return (
         <div id="dclose" className="container_modal absolute top-0 left-0 w-screen h-screen bg-gray-50 flex items-center justify-center" onClick={(event) => closeModal(event)}>
@@ -47,20 +43,12 @@ const ModalAddContact: NextPage<iModalAddContact> = ({openModal, contact}: iModa
 
                 <ul className="flex flex-col mt-6">
                     {
-                       contact !== undefined ? contact.map((item) => {
-                            return (
-                                <ItemContato contato={item.number} contatoId={item.id}/>
-                            )
-                        }) : null
+                        moreContacts !== undefined ? moreContacts.map((item, index) => {
+                             return (
+                                 <ItemContato key={index} contato={item.number} contatoId={item.id}/>
+                             )
+                         }) : null
                     }
-                    {/* <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/>
-                    <ItemContato contato="21982886398" contatoId="5"/> */}
-
                 </ul>
 
                 <form onSubmit={handleSubmit(submitAddContact)} className="flex flex-col">
@@ -75,21 +63,6 @@ const ModalAddContact: NextPage<iModalAddContact> = ({openModal, contact}: iModa
             </div>
         </div>
     )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const clientId = nookies.get(ctx)
-    console.log(clientId["contactguard.id"])
-
-    const response = await api.get<iClientAddContactReturn[]>(`contact-telephone/${clientId["contactguard.id"]}`, {
-        headers: {
-            Authorization: `Bearer ${clientId["contactguard.token"]}`
-        }
-    })
-
-    return { 
-      props: {clients: response.data}
-    }
 }
 
 export default ModalAddContact

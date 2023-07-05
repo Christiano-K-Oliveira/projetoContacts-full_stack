@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const contactAddEmailSchema = z.object({
     email: z.string().email('Email inválido').nonempty('Necessário passar um email'),
+    contact_id: z.string().nullish(),
 })
 
 const contactAddEmailReturnSchema = z.object({
