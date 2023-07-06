@@ -1,4 +1,4 @@
-import FormLogin from "@/components/FormLogin/formLogin"
+import FormLogin from "@/components/FormLogin"
 import Link from "next/link"
 
 const Home = () => {

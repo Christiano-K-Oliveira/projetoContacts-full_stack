@@ -140,10 +140,6 @@ const ClientProvider = ({children}: iClientProviderProps) => {
         console.log(value)
     }
 
-    useEffect(() => {
-        
-    }, [])
-
     return (
         <ClientContext.Provider
           value={{
