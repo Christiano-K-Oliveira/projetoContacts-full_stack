@@ -2,10 +2,12 @@
 
 Observação: O back deve ser rodado primeiro na porta 3000
 
-//Back 
-1_ Dar yarn para instalar as dependências
+//Back (comandos a serem rodados na pasta back)
+
+1_ Dar yarn install para instalar as dependências
 2_ Criar o arquivo .env e configurar com a sua conta e db conforme no exemplo
-3_ Rodar este comando na pasta Back
+3_ Fazer as migrações com os comandos
+4_ Rodar este comando na pasta Back
 - npm run start:dev
 
 // Extra
@@ -13,7 +15,9 @@ Pode rodar o comando para visualizar as tabelas e dados
 - npx prisma studio
 
 
-//Front
+
+//Front (comandos a serem rodados na pasta front)
+
 1_ Rodar estes comandos na pasta Front
 - yarn install
 - yarn dev
