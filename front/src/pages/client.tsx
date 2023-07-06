@@ -83,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx): Promise<GetSe
             }
         }
     }
+    
 
     const response = await api.get<iCreateContactReturn[]>(`contacts/${cookies["contactguard.id"]}`, {
         headers: {
@@ -119,7 +120,3 @@ export const getServerSideProps: GetServerSideProps = async (ctx): Promise<GetSe
 }
   
 export default Client
-
-//Falta renderizar dinamicamente para quando pegar, atualizar, excluir os dados eles renderizarem na page
-//Falta colocar o btn de saída funcionando
-//Falta colocar o Bearer na doc da API, podendo digita-lo no site da API

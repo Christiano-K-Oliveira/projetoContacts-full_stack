@@ -36,18 +36,12 @@ export class ContactsService {
 
   async findOne(id: string, clientId: string) {
     const contact = await this.contactsRepository.findOne(id);
-    console.log(contact);
     const filterContact = contact.filter(
       (contact) => contact.client_id === clientId,
     );
 
     if (!filterContact) {
       throw new NotFoundException('Contact Not Found');
-    }
-    if (filterContact[0].client_id !== clientId) {
-      throw new UnauthorizedException(
-        'Account is not authorized for a contact on this client',
-      );
     }
 
     return filterContact;
@@ -80,7 +74,7 @@ export class ContactsService {
   async remove(id: string, clientId: string) {
     const findContact = await this.contactsRepository.findOne(clientId);
     const filterContact = findContact.filter(
-      (contact) => contact.client_id === clientId,
+      (contact) => contact.id === id,
     );
 
     if (!filterContact) {

@@ -7,9 +7,7 @@ Back (comandos a serem rodados na pasta back)
 2_ Criar o arquivo .env e configurar com a sua conta e db conforme no exemplo
 
 3_ Fazer as migrações com os comandos(para criar as tabelas):
-
--yarn typeorm migration:generate ./src/migrations/createTables -d ./src/data-source
--yarn typeorm migration:run -d ./src/data-source
+-npx prisma migrate dev
 
 4_ Rodar este comando na pasta Back
 - npm run start:dev

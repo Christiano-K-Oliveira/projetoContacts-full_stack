@@ -8,6 +8,7 @@ import { GetServerSideProps, NextPage } from "next"
 import nookies from 'nookies'
 import { api } from "@/services/api"
 import { ClientContext } from "@/contexts/clientContext"
+import { useRouter } from "next/router"
 
 interface iModalUserEmails {
     openModal: Dispatch<SetStateAction<boolean>>,
@@ -29,10 +30,13 @@ const ModalUserEmails = ({openModal, emails}: iModalUserEmails) => {
 
     const { createClientEmail } = useContext(ClientContext)
 
+    const router = useRouter()
+
     const submitAddUserEmail: SubmitHandler<iClientAddEmail> = (emailData: iClientAddEmail) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         createClientEmail(emailData)
         // openModal(false)
+        router.replace(router.asPath)
     };
 
     return (

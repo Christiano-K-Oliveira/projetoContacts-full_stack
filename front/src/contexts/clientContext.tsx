@@ -123,7 +123,7 @@ const ClientProvider = ({children}: iClientProviderProps) => {
         }).catch((err) => console.log(err))
     }
     const excludeClientContact = async (idContact: string) => {
-        await api.delete(`client-contact/${idContact}`, {
+        await api.delete(`client-telephone/${idContact}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

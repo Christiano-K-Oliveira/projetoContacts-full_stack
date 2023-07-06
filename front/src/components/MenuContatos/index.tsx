@@ -6,7 +6,7 @@ interface iMenuContatos {
     openCreateContact: Dispatch<SetStateAction<boolean>>;
     openAddContact: Dispatch<SetStateAction<boolean>>;
     openAddEmail: Dispatch<SetStateAction<boolean>>;
-    contacts: iCreateContactReturn[],
+    contacts: iCreateContactReturn[] | [],
 }
 
 const MenuContatos = ({openCreateContact, openAddContact, openAddEmail, contacts }: iMenuContatos) => {
@@ -19,11 +19,11 @@ const MenuContatos = ({openCreateContact, openAddContact, openAddEmail, contacts
 
             <ul className="ml-8 mt-8 flex flex-col gap-4 mr-8 mb-8">
                 {
-                    contacts.map((item, index) => {
+                    contacts.length > 0 ? contacts.map((item, index) => {
                         return (
                             <CardContact key={index} contactId={item.id} name={item.name} openAddContact={openAddContact} openAddEmail={openAddEmail}/>
                         )
-                    })
+                    }) : null
                 }  
             </ul>
         </section>
