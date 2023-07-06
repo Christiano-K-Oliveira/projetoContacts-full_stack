@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { AiOutlineClose } from 'react-icons/ai'
 import ItemContato from "./ItemContato"
 import { ClientContext } from "@/contexts/clientContext"
+import { useRouter } from "next/router"
 
 interface iModalUserContacts {
     openModal: Dispatch<SetStateAction<boolean>>,
@@ -26,10 +27,14 @@ const ModalUserContacts = ({openModal, contacts}: iModalUserContacts) => {
 
     const { createClientContact } = useContext(ClientContext)
 
+    const router = useRouter()
+
     const submitAddUserEmail: SubmitHandler<iClientAddContact> = (contactData: iClientAddContact) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         createClientContact(contactData)
         // openModal(false)
+        console.log('xa')
+        router.replace(router.asPath)
     };
 
     return (

@@ -5,7 +5,6 @@ import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
-import { boolean, string } from "zod";
 
 interface iContactProviderProps {
     children: React.ReactNode;
@@ -48,7 +47,7 @@ const ContactProvider = ({children}: iContactProviderProps) => {
           Authorization: `Bearer ${token}`
         }
       }).catch((err) => console.log(err))
-
+      router.replace(router.asPath)
     }
     const addMoreContact = async (contactData: iContactAddPhone) => {
       contactData["contact_id"] = contactId

@@ -1,6 +1,7 @@
 import { ClientContext } from "@/contexts/clientContext"
 import { editUserSchema, iEditUser } from "@/schemas/editUser.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/router"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { AiOutlineClose } from 'react-icons/ai'
@@ -25,11 +26,14 @@ const ModalEditUser = ({openModal}: iModalEditUser) => {
 
     const { updateInfoClient } = useContext(ClientContext)
 
+    const router = useRouter()
+
     const submitUpdateUser: SubmitHandler<iEditUser> = (userData: iEditUser) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const data = Object.fromEntries(Object.entries(userData).filter(([_, v]) => v != null && v !== ""))
         updateInfoClient(data)
         openModal(false)
+        router.replace(router.asPath)
     };
 
     return (

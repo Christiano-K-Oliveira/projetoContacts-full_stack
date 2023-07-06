@@ -3,6 +3,7 @@ import { MdPermContactCalendar } from 'react-icons/md'
 import { AiOutlineMail, AiFillContacts } from 'react-icons/ai'
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { ContactContext } from '@/contexts/contactContext';
+import { useRouter } from 'next/router';
 
 interface iCardContact {
     name: string;
@@ -13,6 +14,7 @@ interface iCardContact {
 
 const CardContact = ({name, openAddContact, openAddEmail, contactId}: iCardContact) => {
     const { excludeContact, getMoreContactsInMyContact, getMoreEmailsInMyContact } = useContext(ContactContext)
+    const router = useRouter()
 
     return (
         <li className='flex justify-between items-center py-3 bg-white-fixed w-full px-6'>
@@ -40,8 +42,15 @@ const CardContact = ({name, openAddContact, openAddEmail, contactId}: iCardConta
                     <button>Email</button>
                 </div>
 
-                <button className='ml-10 hover:bg-red-600 transition-all hover:transition-all p-1 text-blue-500 hover:text-white-fixed rounded-md'>
-                    <BsTrash3Fill size={22} onClick={() => excludeContact(contactId)}/>
+                <button onClick={() => {
+                    excludeContact(contactId)
+                    router.replace(router.asPath)
+                }} className='ml-10 hover:bg-red-600 transition-all hover:transition-all p-1 text-blue-500 hover:text-white-fixed rounded-md'>
+                    <BsTrash3Fill size={22} onClick={() => {
+                        excludeContact(contactId)
+                        router.replace(router.asPath)
+                    }
+                }/>
                 </button>
             </div>
         </li>

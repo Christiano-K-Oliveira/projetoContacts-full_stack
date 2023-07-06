@@ -30,7 +30,7 @@ let ContactsPrismaRepository = exports.ContactsPrismaRepository = class Contacts
         const contacts = await this.prisma.contact.findMany({
             where: { client_id },
         });
-        return contacts;
+        return (0, class_transformer_1.plainToInstance)(contact_entity_1.Contact, contacts);
     }
     async update(id, data) {
         const contact = await this.prisma.contact.update({

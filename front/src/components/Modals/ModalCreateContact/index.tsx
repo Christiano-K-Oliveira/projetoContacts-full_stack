@@ -11,8 +11,6 @@ interface iModalCreateContact {
 }
 
 const ModalCreateContact = ({openModal}: iModalCreateContact) => {
-    const router = useRouter()
-
     function closeModal(element: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         const target = element.target as HTMLDivElement
 
@@ -26,6 +24,8 @@ const ModalCreateContact = ({openModal}: iModalCreateContact) => {
     });
 
     const { createContact } = useContext(ContactContext)
+
+    const router = useRouter()
 
     const submitCreateContact: SubmitHandler<iCreateContact> = (userData: iCreateContact) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
