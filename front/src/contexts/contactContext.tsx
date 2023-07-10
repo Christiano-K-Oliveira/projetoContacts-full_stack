@@ -39,7 +39,7 @@ const ContactProvider = ({children}: iContactProviderProps) => {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      })
+      }).catch((err) => console.log(err))
     }
     const excludeContact = async (id: string) => {
       await api.delete(`contacts/${id}`, {
@@ -47,7 +47,6 @@ const ContactProvider = ({children}: iContactProviderProps) => {
           Authorization: `Bearer ${token}`
         }
       }).catch((err) => console.log(err))
-      router.replace(router.asPath)
     }
     const addMoreContact = async (contactData: iContactAddPhone) => {
       contactData["contact_id"] = contactId
