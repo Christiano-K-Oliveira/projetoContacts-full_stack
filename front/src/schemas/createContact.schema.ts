@@ -3,7 +3,7 @@ import { z } from 'zod'
 const createContactSchema = z.object({
     name: z.string().nonempty('Nome obrigatório').max(150, 'Máximo de 150 carcateres'),
     telephone: z.string().min(11, 'Mínimo de 11 caracteres').max(11, 'Máximo de 11 caracteres').nonempty('Necessário passar um telefone'),
-    email: z.string().email('Email inválido').nullish(),
+    email: z.string().optional().or(z.string().refine((value) => value === undefined, 'Email Inválido')),
 })
 
 const createContactReturnSchema = z.object({

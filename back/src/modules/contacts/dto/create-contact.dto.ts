@@ -18,7 +18,7 @@ export class CreateContactDto {
   @IsEmail()
   @IsOptional()
   @MinLength(12)
-  email: string | null;
+  email: string | null | undefined;
 
   @ApiProperty()
   @IsString()

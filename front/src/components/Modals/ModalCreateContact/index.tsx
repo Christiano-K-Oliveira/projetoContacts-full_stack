@@ -27,8 +27,11 @@ const ModalCreateContact = ({openModal}: iModalCreateContact) => {
 
     const router = useRouter()
 
-    const submitCreateContact: SubmitHandler<iCreateContact> = (userData: iCreateContact) => {
+    const submitCreateContact: SubmitHandler<iCreateContact> = async (userData: iCreateContact) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        if (userData.email === '') {
+            userData.email = undefined
+        }
         createContact(userData)
         openModal(false)
         router.replace(router.asPath)
